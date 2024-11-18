@@ -38,6 +38,6 @@ echo "Bumping the version..."
 
 npm version patch
 
-git push -u origin main --tags
+git push -u origin mater --tags
 
 echo "Done."
