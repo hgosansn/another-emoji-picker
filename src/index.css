@@ -1,8 +1,8 @@
 /* CSS Variables for Theming */
 :root {
-    --foreground-color: #e9e9e9;
+    --foreground-color: #c5c5c5;
     --background-color: #252525;
-    --accent-color: #b9b9b9;
+    --accent-color: #ffd30f;
     --primary-color: #505050;
 
     --border-radius: 8px;
@@ -48,7 +48,8 @@ body, .root {
 
 /* Side Navigation */
 .side-nav {
-    min-width: 200px;
+    min-width: 300px;
+    max-width: 300px;
     max-height: 100%;
     background-color: var(--primary-color);
     padding: var(--spacing-large);
@@ -95,17 +96,18 @@ body, .root {
     text-align: left;
     cursor: pointer;
     font-size: 16px;
-    color: var(--primary-color);
+    color: var(--foreground-color);
     transition: background-color 0.3s, color 0.3s;
 }
 
 .side-nav button:hover {
     background-color: var(--accent-color);
-    color: var(--background-color);
+    color: var(--foreground-color);
 }
 
 .side-nav button.active {
     background-color: var(--accent-color);
+    color: var(--background-color);
     font-weight: bold;
 }
 
@@ -144,7 +146,7 @@ input[type='text'] {
     align-items: center;
     justify-content: space-between;
     padding: var(--spacing-medium);
-    border: 1px solid var(--accent-color);
+    border: 1px solid var(--primary-color);
     border-radius: var(--border-radius);
     width: 100px;
     height: 80px;
@@ -169,7 +171,50 @@ input[type='text'] {
 .emoji-hex {
     padding: var(--spacing-xs);
     border-radius: var(--border-radius);
-    border: 1px solid var(--accent-color);
+    border: 1px solid var(--primary-color);
     background-color: var(--background-color);
     color: var(--foreground-color);
 }
+
+
+.toastedList {
+    position: fixed;
+    top: var(--spacing-large);
+    right: var(--spacing-large);
+    padding: var(--spacing-medium) var(--spacing-large);
+    min-width: 200px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-medium);
+}
+
+.toasted {
+    background: var(--accent-color);
+    color: var(--background-color);
+    padding: var(--spacing-medium);
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s, box-shadow 0.3s;
+
+    /* Initial hidden state */
+    transform: translateY(100px);
+    opacity: 0;
+
+    /* Animation setup */
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useToast } from "./Toasty";
 
 const categories = {
     'Smileys & Emotion': [0x1f600, 0x1f64f],
@@ -26,6 +27,7 @@ function App() {
     const [activeCategory, setActiveCategory] = useState(
         Object.keys(categories)[0]
     );
+    const { addToast } = useToast();
 
     const generateEmojis = (start, end) => {
         const emojis = [];
@@ -39,7 +41,7 @@ function App() {
 
     const handleCopy = (emoji) => {
         navigator.clipboard.writeText(emoji);
-        alert(`Copied ${emoji} to clipboard!`);
+        addToast('Copied to clipboard!', 3000);
     };
     const filteredEmojis = generateEmojis(...categories[activeCategory]).filter(
         (emoji) => emoji.hex.includes(search.toUpperCase())
@@ -60,12 +62,6 @@ function App() {
             </nav>
             <div className="main-content scroll">
                 <h1>⚡ Emoji Picker</h1>
-                {/* <input
-              type="text"
-              placeholder="Search by hex..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-            /> */}
                 <div className="emoji-grid">
                     {filteredEmojis.map((emoji) => (
                         <div
