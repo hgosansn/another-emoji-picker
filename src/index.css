@@ -30,6 +30,11 @@ body {
     bottom: 0;
 }
 
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
 body, .root {
     position: fixed;
     top: 0;
@@ -120,6 +125,16 @@ body, .root {
     overflow-y: auto;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    padding: var(--spacing-medium);
+    background: linear-gradient(0deg, var(--background-color), transparent);
+}
+
 /* Input Styles */
 input[type='text'] {
     padding: var(--spacing-medium);
@@ -198,6 +213,7 @@ input[type='text'] {
     cursor: pointer;
     box-shadow: var(--shadow);
     transition: background-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
 
     /* Initial hidden state */
     transform: translateY(100px);
@@ -208,14 +224,14 @@ input[type='text'] {
 }
 
 .toasted .burnt {
-    text-shadow: 1px 1px 1px var(--background-color);
-    padding: var(--spacing-small);
-    border-right: 2px solid var(--background-color);
+    text-shadow: 4px 4px 4px var(--background-color);
+    border-right: 1px solid var(--background-color);
     min-height: 100%;
 }
 
 .toasted span {
-    padding: var(--spacing-medium);
+    display: inline-block;
+    padding: var(--spacing-small);
 }
 
 @keyframes slideUp {

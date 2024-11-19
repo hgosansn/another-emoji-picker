@@ -41,7 +41,7 @@ function App() {
 
     const handleCopy = (emoji) => {
         navigator.clipboard.writeText(emoji);
-        addToast(emoji, 'copied to clipboard', 3000);
+        addToast(emoji, 'copied to clipboard', 10000);
     };
     const filteredEmojis = generateEmojis(...categories[activeCategory]).filter(
         (emoji) => emoji.hex.includes(search.toUpperCase())
@@ -61,7 +61,9 @@ function App() {
                 ))}
             </nav>
             <div className="main-content scroll">
-                <h1>⚡ Emoji Picker</h1>
+                <div className="header">
+                    <a aria-label='repository' href="https://github.com/hgosansn/another-emoji-picker" target="_blank"><h1>⚡ Emoji Picker</h1></a>
+                </div>
                 <div className="emoji-grid">
                     {filteredEmojis.map((emoji) => (
                         <div
