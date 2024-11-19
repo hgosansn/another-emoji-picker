@@ -192,8 +192,7 @@ input[type='text'] {
 .toasted {
     background: var(--accent-color);
     color: var(--background-color);
-    padding: var(--spacing-medium);
-    font-weight: 600;
+    font-weight: 300;
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -206,6 +205,17 @@ input[type='text'] {
 
     /* Animation setup */
     animation: slideUp 0.5s ease-out forwards;
+}
+
+.toasted .burnt {
+    text-shadow: 1px 1px 1px var(--background-color);
+    padding: var(--spacing-small);
+    border-right: 2px solid var(--background-color);
+    min-height: 100%;
+}
+
+.toasted span {
+    padding: var(--spacing-medium);
 }
 
 @keyframes slideUp {

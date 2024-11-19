@@ -41,7 +41,7 @@ function App() {
 
     const handleCopy = (emoji) => {
         navigator.clipboard.writeText(emoji);
-        addToast('Copied to clipboard!', 3000);
+        addToast(emoji, 'copied to clipboard', 3000);
     };
     const filteredEmojis = generateEmojis(...categories[activeCategory]).filter(
         (emoji) => emoji.hex.includes(search.toUpperCase())

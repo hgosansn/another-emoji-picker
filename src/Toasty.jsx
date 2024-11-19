@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 
-const Toast = ({ message, duration = 3000, onClose }) => {
+const Toast = ({ emoji, message, duration = 3000, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -11,7 +11,8 @@ const Toast = ({ message, duration = 3000, onClose }) => {
 
   return (
     <div className="toasted">
-      {message}
+      <span className="burnt">{emoji}</span>
+      <span>{message}</span>
     </div>
   );
 };
@@ -24,9 +25,9 @@ export const useToast = () => useContext(ToastContext);
 const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
-  const addToast = (message, duration = 3000) => {
+  const addToast = (emoji, message, duration = 3000) => {
     const id = Date.now();
-    setToasts((prev) => [...prev, { id, message, duration }]);
+    setToasts((prev) => [...prev, { id, emoji, message, duration }]);
   };
 
   const removeToast = (id) => {
@@ -40,6 +41,7 @@ const ToastProvider = ({ children }) => {
         {toasts.map((toast) => (
             <Toast
             key={toast.id}
+            emoji={toast.emoji}
             message={toast.message}
             duration={toast.duration}
             onClose={() => removeToast(toast.id)}
