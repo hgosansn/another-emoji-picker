@@ -35,7 +35,9 @@ a {
     text-decoration: none;
 }
 
-body, .root {
+body, #root {
+    box-sizing: border-box;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -44,24 +46,39 @@ body, .root {
 }
 
 .app-container {
+    border: 1px solid var(--accent-color);
     display: flex;
+    flex-grow: 1;
     flex-direction: row;
+    box-sizing: border-box;
+    min-height: 100%;
+    min-width: 100%;
     max-height: 100%;
     max-width: 100%;
+
     position: relative;
 }
 
 /* Side Navigation */
 .side-nav {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
     min-width: 300px;
     max-width: 300px;
     max-height: 100%;
+    min-height: 100%;
     background-color: var(--primary-color);
-    padding: var(--spacing-large);
     box-shadow: var(--shadow);
     color: var(--background-color);
-    overflow-y: auto;
+    overflow: hidden;
+}
 
+.side-nav .category-nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding: var(--spacing-large);
 }
 
 /* Custom Scrollbar */
@@ -86,6 +103,7 @@ body, .root {
 
 /* For Firefox */
 .scroll {
+    overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: var(--accent-color) var(--primary-color);
 }
@@ -120,19 +138,17 @@ body, .root {
 .main-content {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    padding: var(--spacing-large);
-    overflow-y: auto;
+    flex: 1 1 auto;
+    padding: 0 var(--spacing-large);
+    gap: var(--spacing-medium);
 }
 
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    position: sticky;
-    top: 0;
-    padding: var(--spacing-medium);
-    background: linear-gradient(0deg, var(--background-color), transparent);
+    padding: var(--spacing-small);
+    border-bottom: 2px solid var(--background-color);
 }
 
 /* Input Styles */
@@ -146,28 +162,33 @@ input[type='text'] {
     max-width: 400px;
 }
 
-/* Emoji Grid */
-.emoji-grid {
+.emoji-category {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-medium);
+}
+
+.emoji-category h2 {
+    font-size: 24px;
+    padding-top: var(--spacing-large);
+}
+
+.emoji-items {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-medium);
-    margin: auto;
-    padding: var(--spacing-medium);
 }
 
 .emoji-item {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-medium);
+    place-items: center;
     border: 1px solid var(--primary-color);
     border-radius: var(--border-radius);
-    width: 100px;
-    height: 80px;
     background-color: var(--background-color);
     transition: background-color 0.3s, transform 0.2s;
     cursor: pointer;
+    height: 58px;
+    width: 58px;
     box-shadow: var(--shadow);
 }
 
@@ -179,6 +200,9 @@ input[type='text'] {
 
 /* Emoji Symbol */
 .emoji-symbol {
+    min-width: 100%;
+    text-align: center;
+
     font-size: 2em;
 }
 
@@ -194,6 +218,7 @@ input[type='text'] {
 
 .toastedList {
     position: fixed;
+    pointer-events: none;
     top: var(--spacing-large);
     right: var(--spacing-large);
     padding: var(--spacing-medium) var(--spacing-large);

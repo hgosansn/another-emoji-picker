@@ -6,4 +6,6 @@ can find the right emoji at glance. Load time is less than 1 second. No external
 
 # Demo
 
+<div>
 ![image](/demo/lighthouse.png)
+<d>
