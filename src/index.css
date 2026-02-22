@@ -151,15 +151,31 @@ body, #root {
     border-bottom: 2px solid var(--background-color);
 }
 
+/* Search Bar */
+.search-bar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--background-color);
+    padding: var(--spacing-medium) 0;
+}
+
 /* Input Styles */
 input[type='text'] {
     padding: var(--spacing-medium);
-    margin-bottom: var(--spacing-large);
     border-radius: var(--border-radius);
     border: 1px solid var(--accent-color);
+    background-color: var(--primary-color);
+    color: var(--foreground-color);
     font-size: 16px;
     width: 100%;
-    max-width: 400px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input[type='text']:focus {
+    border-color: var(--foreground-color);
 }
 
 .emoji-category {
