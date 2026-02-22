@@ -12,6 +12,7 @@
     --spacing-small: 8px;
     --spacing-medium: 16px;
     --spacing-large: 24px;
+    --header-offset: 72px;
 }
 
 /* Global Styles */
@@ -151,6 +152,13 @@ body, #root {
     border-bottom: 2px solid var(--background-color);
 }
 
+.header h1 {
+    font-size: 28px;
+    color: var(--accent-color);
+    margin: var(--spacing-small) 0;
+    padding: var(--spacing-small) var(--spacing-medium);
+}
+
 /* Search Bar */
 .search-bar {
     position: sticky;
@@ -158,6 +166,32 @@ body, #root {
     z-index: 10;
     background-color: var(--background-color);
     padding: var(--spacing-medium) 0;
+}
+
+.search-input-wrapper {
+    position: relative;
+}
+
+.search-input-wrapper input[type='text'] {
+    padding-right: 44px;
+}
+
+.clear-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--foreground-color);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.clear-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
 }
 
 /* Input Styles */
@@ -182,6 +216,8 @@ input[type='text']:focus {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-medium);
+    /* Ensure anchor targets land below the sticky search bar */
+    scroll-margin-top: var(--header-offset);
 }
 
 .emoji-category h2 {
@@ -235,14 +271,16 @@ input[type='text']:focus {
 .toastedList {
     position: fixed;
     pointer-events: none;
-    top: var(--spacing-large);
+    top: calc(var(--header-offset) + var(--spacing-small));
     right: var(--spacing-large);
     padding: var(--spacing-medium) var(--spacing-large);
     min-width: 200px;
-    min-height: 600px;
+    min-height: calc(100% - var(--header-offset) - var(--spacing-small));
+    overflow-y: hidden;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-medium);
+    z-index: 99999;
 }
 
 .toasted {
@@ -255,6 +293,7 @@ input[type='text']:focus {
     box-shadow: var(--shadow);
     transition: background-color 0.3s, box-shadow 0.3s;
     box-sizing: border-box;
+    pointer-events: auto;
 
     /* Initial hidden state */
     transform: translateY(100px);

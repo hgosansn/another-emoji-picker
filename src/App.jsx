@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { useToast } from './Toasty';
 import emojiData from 'unicode-emoji-json/data-by-group.json';
 
@@ -18,12 +18,19 @@ function App() {
         setSearchQuery(e.target.value);
     };
 
+    const inputRef = useRef(null);
+
+    const clearSearch = () => {
+        setSearchQuery('');
+        inputRef.current?.focus();
+    };
+
     const searchResults = useMemo(() => {
         const query = searchQuery.trim().toLowerCase();
         if (!query) return null;
         const results = [];
         for (const [, emojis] of Object.entries(emojiData)) {
-            for (const item of emojis) {
+            for (const item of emojis.emojis) {
                 if (
                     item.name.toLowerCase().includes(query) ||
                     item.slug.replace(/_/g, ' ').includes(query)
@@ -35,7 +42,7 @@ function App() {
         return results;
     }, [searchQuery]);
 
-    const categories = Object.keys(emojiData);
+    const categories = Object.values(emojiData);
 
     return (
         <div className="app-container">
@@ -49,12 +56,11 @@ function App() {
                         <h1>⚡ Emoji Picker</h1>
                     </a>
                 </div>
-                <div className="scroll category-nav">
-                    {categories.map((category) => (
-                        <a
-                            href={`#${category.replace(/\s/g, '')}`}
-                            key={category}
-                        >
+                    <div className="scroll category-nav">
+                    {categories.map((category) => {
+                        const id = category.name.replace(/\s/g, '');
+                        return (
+                        <a href={`#${id}`} key={category.name}>
                             <button
                                 className={
                                     !searchQuery && category === activeCategory
@@ -66,21 +72,34 @@ function App() {
                                     setSearchQuery('');
                                 }}
                             >
-                                {category}
+                                {category.name}
                             </button>
                         </a>
-                    ))}
+                        );
+                    })}
                 </div>
             </nav>
             <div className="main-content scroll">
                 <div className="search-bar">
-                    <input
-                        type="text"
-                        placeholder="Search emojis by name..."
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                        aria-label="Search emojis"
-                    />
+                    <div className="search-input-wrapper">
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            placeholder="Search emojis by name..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            aria-label="Search emojis"
+                        />
+                        {searchQuery && (
+                            <button
+                                className="clear-btn"
+                                onClick={clearSearch}
+                                aria-label="Clear search"
+                            >
+                                ✕
+                            </button>
+                        )}
+                    </div>
                 </div>
 
                 {searchResults !== null ? (
@@ -106,15 +125,17 @@ function App() {
                         </div>
                     </div>
                 ) : (
-                    Object.entries(emojiData).map(([group, emojis]) => (
+                    Object.entries(emojiData).map(([group, emojis]) => {
+                        const id = emojis.name.replace(/\s/g, '');
+                        return (
                         <div
-                            key={group}
-                            id={group.replace(/\s/g, '')}
+                            key={emojis.name}
+                            id={id}
                             className="emoji-category"
                         >
-                            <h2>{group}</h2>
+                            <h2>{emojis.name}</h2>
                             <div className="emoji-items">
-                                {emojis.map((item) => (
+                                {emojis.emojis.map((item) => (
                                     <div
                                         key={item.emoji}
                                         className="emoji-item"
@@ -128,7 +149,7 @@ function App() {
                                 ))}
                             </div>
                         </div>
-                    ))
+                    )})
                 )}
             </div>
         </div>
